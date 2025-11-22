@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Wood Beams – The World’s Slowest Calculator</title>
+  <title>Wood Beams – World's Slowest Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
@@ -15,9 +15,9 @@
       --text-main: #111827;
       --text-muted: #4b5563;
       --danger: #b91c1c;
-      --radius-lg: 16px;
+      --radius-lg: 18px;
       --radius-md: 10px;
-      --shadow-soft: 0 14px 30px rgba(15, 23, 42, 0.08);
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
     }
 
     * { box-sizing: border-box; }
@@ -25,71 +25,70 @@
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #e5edff 0, #f5f5f7 55%);
+      background: radial-gradient(circle at top, #dbeafe 0, #f5f5f7 52%);
       color: var(--text-main);
     }
 
     .app {
-      max-width: 980px;
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 2.5rem 1rem 3rem;
+      padding: 2.2rem 1rem 3rem;
     }
 
     header {
       margin-bottom: 1.75rem;
-      text-align: left;
     }
 
     header h1 {
-      margin: 0 0 0.35rem;
-      font-size: 1.9rem;
-      letter-spacing: 0.03em;
-    }
-
-    .tagline {
-      margin: 0 0 0.35rem;
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: #f59e0b;
+      margin: 0 0 0.2rem;
+      font-size: 2.1rem;
+      letter-spacing: 0.02em;
     }
 
     header p {
-      margin: 0;
+      margin: 0.1rem 0;
       color: var(--text-muted);
-      max-width: 720px;
-      font-size: 0.95rem;
+      font-size: 0.96rem;
+    }
+
+    .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: #fef9c3;
+      color: #854d0e;
+      font-size: 0.8rem;
+      font-weight: 500;
     }
 
     .card {
       background: var(--card-bg);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
-      padding: 1.4rem 1.5rem 1.7rem;
+      padding: 1.5rem 1.6rem 1.8rem;
       margin-bottom: 1.4rem;
-      border: 1px solid rgba(148,163,184,0.3);
+      border: 1px solid rgba(148, 163, 184, 0.45);
     }
 
     .card h2 {
-      margin: 0 0 0.7rem;
-      font-size: 1.2rem;
-    }
-
-    .card h3 {
-      margin: 0.3rem 0 0.3rem;
-      font-size: 1.0rem;
+      margin: 0 0 0.5rem;
+      font-size: 1.25rem;
     }
 
     .sub {
-      font-size: 0.85rem;
+      margin: 0 0 0.7rem;
       color: var(--text-muted);
-      margin: 0 0 0.6rem;
+      font-size: 0.86rem;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 0.6rem 1rem;
-      margin-top: 0.4rem;
+      margin-top: 0.25rem;
     }
 
     .field {
@@ -99,17 +98,17 @@
     }
 
     .field label {
-      margin-bottom: 0.14rem;
+      margin-bottom: 0.16rem;
       color: var(--text-muted);
     }
 
     .field input,
     .field select {
-      padding: 0.35rem 0.45rem;
+      padding: 0.35rem 0.5rem;
       border-radius: 8px;
       border: 1px solid #d1d5db;
       background: #f9fafb;
-      font-size: 0.85rem;
+      font-size: 0.86rem;
     }
 
     .field input:focus,
@@ -123,8 +122,8 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
+      font-size: 0.84rem;
+      margin-top: 0.25rem;
       color: var(--text-muted);
     }
 
@@ -135,57 +134,57 @@
       cursor: pointer;
     }
 
-    .eq-block {
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(148,163,184,0.6);
-      background: rgba(255,255,255,0.9);
-      padding: 0.75rem 0.9rem;
-      margin-top: 0.7rem;
-      font-size: 0.85rem;
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.6rem 0.9rem;
+      margin-top: 0.45rem;
     }
 
-    .eq-options {
-      margin-top: 0.4rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .eq-options label {
+    .quiz-pill {
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 0.45rem 0.7rem;
       display: flex;
       align-items: flex-start;
-      gap: 0.35rem;
-      cursor: pointer;
+      gap: 0.4rem;
+      background: #f9fafb;
+      font-size: 0.83rem;
     }
 
-    .eq-options code {
-      font-size: 0.8rem;
+    .quiz-pill input {
+      margin-top: 0.3rem;
+    }
+
+    .quiz-pill code {
+      font-size: 0.78rem;
+      white-space: pre-wrap;
     }
 
     .button-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.65rem;
-      margin-top: 0.9rem;
+      gap: 0.7rem;
+      margin-top: 1rem;
     }
 
     button {
       border-radius: 999px;
       border: none;
-      padding: 0.55rem 1.15rem;
+      padding: 0.6rem 1.25rem;
       font-size: 0.92rem;
       font-weight: 500;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.4rem;
       white-space: nowrap;
     }
 
     button.primary {
       background: var(--accent);
       color: #ffffff;
-      box-shadow: 0 10px 18px rgba(31,111,235,0.35);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.45);
     }
 
     button.secondary {
@@ -198,54 +197,47 @@
       box-shadow: none;
     }
 
-    .mono-block {
-      width: 100%;
-      min-height: 180px;
+    .status {
+      font-size: 0.82rem;
+      margin-top: 0.4rem;
+      min-height: 1.1em;
+    }
+
+    .status.error {
+      color: var(--danger);
+    }
+
+    .status.ok {
+      color: #15803d;
+    }
+
+    pre {
+      margin: 0;
+      padding: 0.85rem 0.95rem;
+      border-radius: var(--radius-md);
+      background: #020617;
+      color: #e5e7eb;
       font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
       font-size: 0.82rem;
-      line-height: 1.45;
-      padding: 0.75rem 0.9rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      background: #0f172a;
-      color: #e5e7eb;
-      box-shadow: inset 0 0 0 1px rgba(15,23,42,0.8);
+      line-height: 1.5;
       overflow-x: auto;
-      white-space: pre;
+      border: 1px solid #111827;
     }
-
-    .mono-block.small {
-      min-height: 120px;
-      margin-top: 0.5rem;
-    }
-
-    .copy-status {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 0.35rem;
-      min-height: 1em;
-    }
-
-    .copy-status.success { color: #059669; }
-    .copy-status.error { color: var(--danger); }
 
     footer {
-      margin-top: 1rem;
-      font-size: 0.8rem;
+      margin-top: 1.4rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       text-align: right;
     }
 
-    @media (max-width: 640px) {
-      .app { padding-inline: 0.8rem; }
-      header h1 { font-size: 1.6rem; }
+    @media (max-width: 680px) {
+      .app { padding-inline: 0.85rem; }
+      header h1 { font-size: 1.7rem; }
       button.primary,
       button.secondary {
         flex: 1 1 auto;
         justify-content: center;
-      }
-      .mono-block {
-        min-height: 160px;
       }
     }
   </style>
@@ -254,470 +246,396 @@
   <div class="app">
     <header>
       <h1>Wood Beams</h1>
-      <p class="tagline">The world’s slowest calculator and fastest learning tool.</p>
-      <p>
-        Simple-span wood beam trainer. Enter geometry and loads, then earn your answer by picking the
-        correct internal force equations first.
-      </p>
+      <p>Single-span trainer for simple beams with a partial uniform load and a point load.</p>
+      <div class="tagline">
+        🌲 World's slowest calculator &amp; fastest learning tool
+      </div>
     </header>
 
-    <!-- 1: GEOMETRY & MATERIAL -->
+    <!-- 1. Beam & design method -->
     <section class="card">
-      <h2>1. Geometry &amp; material</h2>
-      <p class="sub">Basic span and design settings. Units are up to you, just stay consistent.</p>
+      <h2>1. Beam info &amp; design method</h2>
+      <p class="sub">
+        Start with a simple simply-supported beam. Units are up to you; just be consistent
+        (e.g., ft &amp; kips, mm &amp; kN).
+      </p>
+
       <div class="grid">
         <div class="field">
-          <label for="L">Span length, L</label>
-          <input id="L" type="number" step="0.01" placeholder="e.g. 16 (ft)" />
+          <label for="spanL">Span length, L</label>
+          <input id="spanL" type="number" step="0.01" placeholder="e.g. 18 (ft)" />
         </div>
         <div class="field">
-          <label for="species">Species / grade (optional)</label>
-          <input id="species" type="text" placeholder="e.g. DF No. 2" />
+          <label for="species">Species / product</label>
+          <input id="species" type="text" placeholder="e.g. DF-L No. 2, 3.5x11.875 LVL" />
         </div>
         <div class="field">
-          <label for="designMethod">Design method</label>
-          <select id="designMethod">
-            <option value="ASD">ASD</option>
-            <option value="LRFD">LRFD</option>
-          </select>
+          <label>Design method</label>
+          <div class="inline-radio">
+            <label><input type="radio" name="designMethod" value="ASD" checked /> ASD</label>
+            <label><input type="radio" name="designMethod" value="LRFD" /> LRFD</label>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 2: LOADS -->
+    <!-- 2. Loading -->
     <section class="card">
-      <h2>2. Loads on the beam</h2>
+      <h2>2. Loading – partial uniform + point load</h2>
       <p class="sub">
-        Simple span with optional uniform load over a segment and an optional point load. All loads are
-        assumed downward.
+        Define loads along the span. The trainer uses statics with Macaulay brackets for the general case:
+        a uniform load between <em>a</em> and <em>b</em> plus a point load at <em>x<sub>P</sub></em>.
       </p>
 
-      <h3>2A. Segment uniform load</h3>
       <div class="grid">
         <div class="field">
-          <label for="wUniform">Uniform load, w (force / length)</label>
-          <input id="wUniform" type="number" step="0.01" placeholder="e.g. 0.8 (k/ft or kip/ft)" />
+          <label for="w">Uniform load, w</label>
+          <input id="w" type="number" step="0.01" placeholder="e.g. 0.8 (kip/ft)" />
         </div>
         <div class="field">
-          <label for="wStart">Uniform load start, a (from left support)</label>
-          <input id="wStart" type="number" step="0.01" placeholder="e.g. 0" />
+          <label for="wStart">Uniform load start, a</label>
+          <input id="wStart" type="number" step="0.01" placeholder="e.g. 0 (ft)" />
         </div>
         <div class="field">
-          <label for="wEnd">Uniform load end, b (from left support)</label>
-          <input id="wEnd" type="number" step="0.01" placeholder="e.g. 16" />
-        </div>
-      </div>
-      <p class="sub" style="margin-top:0.4rem;">
-        Tip: full-length load = set <em>a = 0</em> and <em>b = L</em>. Leave w = 0 to ignore the uniform load.
-      </p>
-
-      <h3>2B. Point load</h3>
-      <div class="grid">
-        <div class="field">
-          <label for="Ppoint">Point load, P (force)</label>
-          <input id="Ppoint" type="number" step="0.01" placeholder="e.g. 5 (kips)" />
+          <label for="wEnd">Uniform load end, b</label>
+          <input id="wEnd" type="number" step="0.01" placeholder="e.g. 18 (ft)" />
         </div>
         <div class="field">
-          <label for="Px">Point load location, x<sub>P</sub> (from left)</label>
-          <input id="Px" type="number" step="0.01" placeholder="e.g. 8" />
+          <label for="P">Point load, P</label>
+          <input id="P" type="number" step="0.01" placeholder="e.g. 4 (kips)" />
+        </div>
+        <div class="field">
+          <label for="Px">Point load position, x<sub>P</sub></label>
+          <input id="Px" type="number" step="0.01" placeholder="e.g. 9 (ft)" />
         </div>
       </div>
 
-      <p class="sub" style="margin-top:0.4rem;">
-        All loads are treated as downward. The beam is simply supported at x = 0 and x = L.
+      <p class="sub" style="margin-top:0.8rem;">
+        Tip: leave <code>w</code> or <code>P</code> blank (or zero) if you want only one type of load.
       </p>
     </section>
 
-    <!-- 3: EQUATION CHOICES -->
+    <!-- 3. Quiz – shear equation -->
     <section class="card">
-      <h2>3. Pick the internal force equations</h2>
+      <h2>3. Shear equation quiz</h2>
       <p class="sub">
-        Before the beam will give you numbers, you have to pick the correct equations for the uniform load.
-        We’ll only look at the <em>uniform load part</em> here and call the local coordinate from the start of
-        that load <code>z</code>.
+        Pick the correct expression for the shear diagram using Macaulay bracket notation
+        ⟨x − c⟩ = max(0, x − c) and the step function H(x − c).
       </p>
 
-      <div class="eq-block">
-        <h3>3A. Bending moment from the uniform load</h3>
-        <p>
-          For a uniform load of intensity <code>w</code> acting over a segment of length
-          <code>L<sub>u</sub></code>, measured from its start as <code>z = x − a</code>, what is the
-          internal bending moment from <em>that uniform load alone</em> for <code>0 ≤ z ≤ L<sub>u</sub></code>?
-        </p>
-        <div class="eq-options">
-          <label>
-            <input type="radio" name="momentEq" id="momentCorrect" />
-            <span>
-              <code>M<sub>w</sub>(z) = w·z² / 2</code> &nbsp;– uses distance measured from the start of the load.
-            </span>
-          </label>
-          <label>
-            <input type="radio" name="momentEq" id="momentWrong" />
-            <span>
-              <code>M<sub>w</sub>(z) = w·x² / 2</code> &nbsp;– treats the load as if it always starts at the
-              left support.
-            </span>
-          </label>
-        </div>
-        <div class="button-row" style="margin-top:0.6rem;">
-          <button class="secondary" type="button" id="btnCheckMoment">Check moment equation</button>
-        </div>
-      </div>
+      <div class="quiz-options">
+        <label class="quiz-pill">
+          <input type="radio" name="shearFormula" value="correct" />
+          <div>
+            <strong>Option A</strong>
+            <div><code>
+V(x) = R_A
+       − w⟨x − a⟩
+       + w⟨x − b⟩
+       − P·H(x − x_P)
+            </code></div>
+          </div>
+        </label>
 
-      <div class="eq-block">
-        <h3>3B. Shear from the uniform load</h3>
-        <p>
-          For that same uniform load, again using <code>z</code> measured from the start of the load, what is
-          the internal shear from the uniform load alone?
-        </p>
-        <div class="eq-options">
-          <label>
-            <input type="radio" name="shearEq" id="shearCorrect" />
-            <span>
-              <code>V<sub>w</sub>(z) = w·z</code> &nbsp;– starts at zero at the beginning of the load.
-            </span>
-          </label>
-          <label>
-            <input type="radio" name="shearEq" id="shearWrong" />
-            <span>
-              <code>V<sub>w</sub>(z) = w·x</code> &nbsp;– again pretending the load starts at the support.
-            </span>
-          </label>
-        </div>
-        <div class="button-row" style="margin-top:0.6rem;">
-          <button class="secondary" type="button" id="btnCheckShear">Check shear equation</button>
-        </div>
+        <label class="quiz-pill">
+          <input type="radio" name="shearFormula" value="wrong" />
+          <div>
+            <strong>Option B</strong>
+            <div><code>
+V(x) = R_A
+       − w⟨x − a⟩
+       − P
+            </code></div>
+            <div style="margin-top:0.2rem; color:var(--text-muted);">
+              (Hint: what happens after the load patch ends or before the point load?)
+            </div>
+          </div>
+        </label>
       </div>
+    </section>
 
-      <div id="equationStatus" class="copy-status" aria-live="polite"></div>
+    <!-- 4. Quiz – moment equation -->
+    <section class="card">
+      <h2>4. Moment equation quiz</h2>
+      <p class="sub">
+        Now choose the bending moment expression built from the same loads. Again, ⟨x − c⟩ = max(0, x − c).
+      </p>
+
+      <div class="quiz-options">
+        <label class="quiz-pill">
+          <input type="radio" name="momentFormula" value="correct" />
+          <div>
+            <strong>Option A</strong>
+            <div><code>
+M(x) = R_A·x
+       − ½ w⟨x − a⟩²
+       + ½ w⟨x − b⟩²
+       − P⟨x − x_P⟩
+            </code></div>
+          </div>
+        </label>
+
+        <label class="quiz-pill">
+          <input type="radio" name="momentFormula" value="wrong" />
+          <div>
+            <strong>Option B</strong>
+            <div><code>
+M(x) = R_A·x
+       − w⟨x − a⟩
+       − P⟨x − x_P⟩
+            </code></div>
+            <div style="margin-top:0.2rem; color:var(--text-muted);">
+              (Suspiciously missing something with a square…)
+            </div>
+          </div>
+        </label>
+      </div>
 
       <div class="button-row">
-        <button class="primary" type="button" id="btnCompute">
-          ✅ Compute reactions, V-max, M-max & mini-report
-        </button>
+        <button class="primary" type="button" id="btnRun">▶ Run beam check</button>
+        <button class="secondary" type="button" id="btnClear">Reset inputs</button>
       </div>
+      <div id="status" class="status"></div>
     </section>
 
-    <!-- 4: RESULTS -->
+    <!-- 5. Results -->
     <section class="card">
-      <h2>4. Results & mini-report</h2>
+      <h2>5. Results &amp; formulas used</h2>
       <p class="sub">
-        Numeric results based on your loads, plus the (slightly nerdy) formulas used under the hood.
+        Once the quiz answers are correct, the calculator will report reactions and
+        approximate maximum shear &amp; moment along the span, using the chosen loading.
       </p>
-      <pre id="resultsOutput" class="mono-block"></pre>
-
-      <h3>Formulas used (symbolic)</h3>
-      <pre id="formulaOutput" class="mono-block small"></pre>
+      <pre id="results">(No results yet – fill in the beam, pass the quizzes, then hit “Run beam check.”)</pre>
     </section>
 
     <footer>
-      Wood Beams Trainer – simple span with w(a→b) + P at x<sub>P</sub>. Check your math, not just the answers.
+      Wood beam trainer – educational only, not a design program. Verify against NDS, ASCE 7, and project requirements.
     </footer>
   </div>
 
   <script>
-    (function () {
-      let momentOk = false;
-      let shearOk = false;
+    function valNum(id) {
+      const raw = document.getElementById(id).value;
+      if (raw === "") return null;
+      const v = parseFloat(raw);
+      return isNaN(v) ? null : v;
+    }
 
-      function num(id) {
-        var v = parseFloat(document.getElementById(id).value);
-        return isNaN(v) ? null : v;
+    function ramp(x) {
+      return x > 0 ? x : 0;
+    }
+
+    function runBeamCheck() {
+      const statusEl = document.getElementById("status");
+      const resultsEl = document.getElementById("results");
+      statusEl.textContent = "";
+      statusEl.className = "status";
+
+      const L = valNum("spanL");
+      if (!L || L <= 0) {
+        statusEl.textContent = "I need a positive span length L before we start doing statics.";
+        statusEl.classList.add("error");
+        return;
       }
 
-      function str(id) {
-        return (document.getElementById(id).value || "").trim();
+      let w = valNum("w") || 0;
+      let a = valNum("wStart");
+      let b = valNum("wEnd");
+      let P = valNum("P") || 0;
+      let xP = valNum("Px");
+
+      // Loading sanity checks
+      if (w !== 0) {
+        if (a === null || b === null) {
+          statusEl.textContent = "For the uniform load, please provide both a start (a) and end (b).";
+          statusEl.classList.add("error");
+          return;
+        }
+        if (a < 0 || b < 0 || a > L || b > L || b < a) {
+          statusEl.textContent = "Uniform load must satisfy 0 ≤ a ≤ b ≤ L. Right now it does not.";
+          statusEl.classList.add("error");
+          return;
+        }
+      } else {
+        // If w is zero, ignore a/b
+        a = 0;
+        b = 0;
+      }
+
+      if (P !== 0) {
+        if (xP === null) {
+          statusEl.textContent = "You gave me a point load P but no position x_P.";
+          statusEl.classList.add("error");
+          return;
+        }
+        if (xP < 0 || xP > L) {
+          statusEl.textContent = "Point load position must be between 0 and L.";
+          statusEl.classList.add("error");
+          return;
+        }
+      } else {
+        xP = 0;
+      }
+
+      // Quiz checks
+      const shearChoice = document.querySelector('input[name="shearFormula"]:checked');
+      const momentChoice = document.querySelector('input[name="momentFormula"]:checked');
+
+      if (!shearChoice || !momentChoice) {
+        statusEl.textContent = "Pick a shear equation AND a moment equation before we run the beam.";
+        statusEl.classList.add("error");
+        return;
+      }
+
+      if (shearChoice.value !== "correct") {
+        statusEl.textContent =
+          "My internal shear goblins are offended. That shear expression leaks equilibrium. Try the other option.";
+        statusEl.classList.add("error");
+        return;
+      }
+
+      if (momentChoice.value !== "correct") {
+        statusEl.textContent =
+          "The bending gnomes protest: that moment formula is missing a square. Give Option A a shot.";
+        statusEl.classList.add("error");
+        return;
+      }
+
+      // All good – time to actually calculate.
+      // Treat partial uniform as equivalent distributed load with Macaulay brackets.
+      const W = w * Math.max(0, b - a);               // total uniform load
+      const x_c = W !== 0 ? 0.5 * (a + b) : 0.0;      // centroid of patch
+
+      // Reactions from equilibrium:
+      //  R_B = (W x_c + P xP) / L
+      //  R_A = W + P - R_B
+      let RB = 0;
+      let RA = 0;
+      if (W !== 0 || P !== 0) {
+        RB = (W * x_c + P * xP) / L;
+        RA = W + P - RB;
+      }
+
+      // Shear and moment via Macaulay expressions
+      function Vx(x) {
+        // V(x) = R_A − w⟨x − a⟩ + w⟨x − b⟩ − P·H(x − xP)
+        let v = RA;
+        if (w !== 0) {
+          v -= w * ramp(x - a);
+          v += w * ramp(x - b);
+        }
+        if (P !== 0 && x >= xP) {
+          v -= P;
+        }
+        return v;
+      }
+
+      function Mx(x) {
+        // M(x) = R_A x − ½ w⟨x − a⟩² + ½ w⟨x − b⟩² − P⟨x − xP⟩
+        let m = RA * x;
+        if (w !== 0) {
+          m -= 0.5 * w * Math.pow(ramp(x - a), 2);
+          m += 0.5 * w * Math.pow(ramp(x - b), 2);
+        }
+        if (P !== 0) {
+          m -= P * ramp(x - xP);
+        }
+        return m;
+      }
+
+      // Sample along the span to find approximate max |V| and |M|
+      let Vmax = 0, xVmax = 0;
+      let Mmax = 0, xMmax = 0;
+      const n = 600;
+      const dx = L / n;
+
+      for (let i = 0; i <= n; i++) {
+        const x = dx * i;
+        const V = Vx(x);
+        const M = Mx(x);
+        if (Math.abs(V) > Math.abs(Vmax)) {
+          Vmax = V;
+          xVmax = x;
+        }
+        if (Math.abs(M) > Math.abs(Mmax)) {
+          Mmax = M;
+          xMmax = x;
+        }
       }
 
       function fmt(x, digits) {
-        if (x === null || x === undefined || isNaN(x)) return "N/A";
-        return x.toFixed(digits != null ? digits : 3);
+        if (!isFinite(x)) return "N/A";
+        return x.toFixed(digits);
       }
 
-      /**
-       * Compute reactions and envelopes for:
-       * - simple span beam length L
-       * - uniform load w from a to b (downward)
-       * - point load P at xP (downward)
-       */
-      function computeBeam(L, w, a, b, P, xP) {
-        const hasUniform = w !== null && Math.abs(w) > 0 && a !== null && b !== null && b > a;
-        const hasPoint = P !== null && Math.abs(P) > 0 && xP !== null;
+      const method = (document.querySelector('input[name="designMethod"]:checked') || {}).value || "ASD";
+      const species = (document.getElementById("species").value || "").trim();
 
-        const Lload = hasUniform ? (b - a) : 0;
-        const W = hasUniform ? w * Lload : 0;
-        const xc = hasUniform ? (a + b) / 2 : 0;
+      let out = [];
 
-        const totalLoad = (hasUniform ? W : 0) + (hasPoint ? P : 0);
+      out.push("WOOD BEAM SUMMARY");
+      out.push("-----------------");
+      out.push(`Span: L = ${fmt(L, 3)} (length units)`);
+      if (species) out.push(`Member: ${species}`);
+      out.push(`Design method: ${method}`);
+      out.push("");
 
-        let RB = 0;
-        if (L > 0) {
-          const momentLoads = (hasUniform ? W * xc : 0) + (hasPoint ? P * xP : 0);
-          RB = momentLoads / L;
-        }
-        const RA = totalLoad - RB;
-
-        function seg(x) {
-          if (!hasUniform) return 0;
-          return Math.max(0, Math.min(x, b) - a);
-        }
-
-        function shear(x) {
-          let V = RA;
-          if (hasUniform) {
-            V -= w * seg(x);
-          }
-          if (hasPoint && x >= xP) {
-            V -= P;
-          }
-          return V;
-        }
-
-        function uniformMoment(x) {
-          if (!hasUniform) return 0;
-          const segLen = seg(x);
-          if (segLen <= 0) return 0;
-
-          let xCenter;
-          if (x < b) {
-            // centroid of segment [a, x]
-            xCenter = (a + x) / 2;
-          } else {
-            // full loaded length, centroid at mid of [a, b]
-            xCenter = xc;
-          }
-          const Wseg = w * segLen;
-          return Wseg * (x - xCenter);
-        }
-
-        function moment(x) {
-          let M = RA * x;
-          if (hasUniform) {
-            M -= uniformMoment(x);
-          }
-          if (hasPoint && x >= xP) {
-            M -= P * (x - xP);
-          }
-          return M;
-        }
-
-        const steps = 400;
-        let Vmax = -Infinity, Vmin = Infinity;
-        let xVmax = 0, xVmin = 0;
-        let Mmax = -Infinity, Mmin = Infinity;
-        let xMmax = 0, xMmin = 0;
-
-        for (let i = 0; i <= steps; i++) {
-          const x = (L * i) / steps;
-          const Vx = shear(x);
-          const Mx = moment(x);
-
-          if (Vx > Vmax) { Vmax = Vx; xVmax = x; }
-          if (Vx < Vmin) { Vmin = Vx; xVmin = x; }
-
-          if (Mx > Mmax) { Mmax = Mx; xMmax = x; }
-          if (Mx < Mmin) { Mmin = Mx; xMmin = x; }
-        }
-
-        return {
-          L, w, a, b, P, xP,
-          hasUniform,
-          hasPoint,
-          Lload,
-          W,
-          xc,
-          RA,
-          RB,
-          Vmax,
-          Vmin,
-          xVmax,
-          xVmin,
-          Mmax,
-          Mmin,
-          xMmax,
-          xMmin
-        };
+      out.push("Loading:");
+      if (W !== 0) {
+        out.push(`  Uniform load: w = ${fmt(w, 3)} (force/length) from a = ${fmt(a, 3)} to b = ${fmt(b, 3)}`);
+        out.push(`    Total W = w (b - a) = ${fmt(W, 3)} at centroid x_c = (a + b)/2 = ${fmt(x_c, 3)}`);
+      } else {
+        out.push("  Uniform load: none");
       }
-
-      function showStatus(message, type) {
-        var status = document.getElementById("equationStatus");
-        status.textContent = message || "";
-        status.className = "copy-status" + (type ? " " + type : "");
+      if (P !== 0) {
+        out.push(`  Point load: P = ${fmt(P, 3)} at x_P = ${fmt(xP, 3)}`);
+      } else {
+        out.push("  Point load: none");
       }
+      out.push("");
 
-      function handleCheckMoment() {
-        var choice = document.querySelector('input[name="momentEq"]:checked');
-        if (!choice) {
-          showStatus("Pick one of the moment options first – the beam can’t read your mind (yet).", "error");
-          return;
-        }
+      out.push("Reactions from equilibrium:");
+      out.push("  ΣM_A = 0 ⇒ R_B L = W x_c + P x_P");
+      out.push(`  R_B = (W x_c + P x_P) / L = ${fmt(RB, 3)}`);
+      out.push(`  R_A = W + P − R_B = ${fmt(RA, 3)}`);
+      out.push("");
 
-        if (choice.id === "momentCorrect") {
-          momentOk = true;
-          showStatus("Nice – using M_w(z) = w·z² / 2 keeps the origin at the start of the load.", "success");
-        } else {
-          momentOk = false;
-          showStatus("That one treats the load like it always starts at x = 0. The beam is quietly judging you. Try again.", "error");
-        }
-      }
+      out.push("Selected shear expression (you picked the correct one):");
+      out.push("  V(x) = R_A − w⟨x − a⟩ + w⟨x − b⟩ − P·H(x − x_P)");
+      out.push("");
 
-      function handleCheckShear() {
-        var choice = document.querySelector('input[name=\"shearEq\"]:checked');
-        if (!choice) {
-          showStatus("Pick one of the shear options – no partial credit for vibes.", "error");
-          return;
-        }
+      out.push("Selected moment expression:");
+      out.push("  M(x) = R_A x − (1/2) w⟨x − a⟩² + (1/2) w⟨x − b⟩² − P⟨x − x_P⟩");
+      out.push("");
 
-        if (choice.id === "shearCorrect") {
-          shearOk = true;
-          showStatus("Correct – V_w(z) = w·z grows linearly from the start of the loaded segment.", "success");
-        } else {
-          shearOk = false;
-          showStatus("That shear equation thinks the load begins at the left support. The load strongly disagrees. Try again.", "error");
-        }
-      }
+      out.push("Approximate extrema along 0 ≤ x ≤ L:");
+      out.push(`  Max |V(x)| ≈ ${fmt(Vmax, 3)} (force units) at x ≈ ${fmt(xVmax, 3)}`);
+      out.push(`  Max |M(x)| ≈ ${fmt(Mmax, 3)} (force·length units) at x ≈ ${fmt(xMmax, 3)}`);
+      out.push("");
+      out.push("Use these envelopes with NDS section properties (S, Z, I) and adjustment factors to check fb, fv, and deflection in your own calc package.");
 
-      function computeAndDisplay() {
-        if (!momentOk || !shearOk) {
-          showStatus("My ethics subroutine refuses to compute design forces until you pick the right moment AND shear equations.", "error");
-          return;
-        }
+      resultsEl.textContent = out.join("\n");
+      statusEl.textContent = "Statics complete. Beam goblins appeased ✅";
+      statusEl.classList.add("ok");
+    }
 
-        var L = num("L");
-        var w = num("wUniform") || 0;
-        var a = num("wStart") || 0;
-        var b = num("wEnd") || 0;
-        var P = num("Ppoint") || 0;
-        var xP = num("Px");
+    function clearAll() {
+      const ids = ["spanL","species","w","wStart","wEnd","P","Px"];
+      ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ""; });
 
-        var designMethod = str("designMethod") || "ASD";
-        var species = str("species");
+      document.querySelectorAll('input[name="shearFormula"]').forEach(r => r.checked = false);
+      document.querySelectorAll('input[name="momentFormula"]').forEach(r => r.checked = false);
 
-        if (L === null || L <= 0) {
-          showStatus("Span length L needs to be a positive number. Right now it’s not.", "error");
-          return;
-        }
+      const statusEl = document.getElementById("status");
+      statusEl.textContent = "";
+      statusEl.className = "status";
 
-        if (b < a) {
-          showStatus("For the uniform load, end b must be ≥ start a. Unless you’ve invented negative length, flip those.", "error");
-          return;
-        }
+      const resultsEl = document.getElementById("results");
+      resultsEl.textContent = "(No results yet – fill in the beam, pass the quizzes, then hit “Run beam check.”)";
+    }
 
-        if ((P !== 0) && (xP === null || xP < 0 || xP > L)) {
-          showStatus("Point load location x_P must be between 0 and L when P ≠ 0.", "error");
-          return;
-        }
-
-        var result = computeBeam(L, w, a, b, P, xP);
-
-        var lines = [];
-        lines.push("WOOD BEAM SUMMARY – SIMPLE SPAN");
-        lines.push("--------------------------------");
-        lines.push("Design method: " + designMethod);
-        if (species) lines.push("Species / grade: " + species);
-        lines.push("");
-        lines.push("Span length: L = " + fmt(result.L, 3));
-        lines.push("");
-
-        if (result.hasUniform) {
-          lines.push("Uniform load segment:");
-          lines.push("  w = " + fmt(result.w, 3) + " (force / length units)");
-          lines.push("  start a = " + fmt(result.a, 3));
-          lines.push("  end   b = " + fmt(result.b, 3));
-          lines.push("  loaded length L_u = b − a = " + fmt(result.Lload, 3));
-          lines.push("  resultant W = w · L_u = " + fmt(result.W, 3));
-          lines.push("  resultant acts at x_c = (a + b) / 2 = " + fmt(result.xc, 3));
-          lines.push("");
-        } else {
-          lines.push("Uniform load: none (w = 0 or b ≤ a).");
-          lines.push("");
-        }
-
-        if (result.hasPoint) {
-          lines.push("Point load:");
-          lines.push("  P = " + fmt(result.P, 3));
-          lines.push("  x_P = " + fmt(result.xP, 3));
-          lines.push("");
-        } else {
-          lines.push("Point load: none (P = 0).");
-          lines.push("");
-        }
-
-        lines.push("Reactions (upward positive):");
-        lines.push("  R_A = " + fmt(result.RA, 3));
-        lines.push("  R_B = " + fmt(result.RB, 3));
-        lines.push("");
-
-        lines.push("Shear envelope (upward positive):");
-        lines.push("  V_max (most positive) = " + fmt(result.Vmax, 3) +
-          " at x ≈ " + fmt(result.xVmax, 3));
-        lines.push("  V_min (most negative) = " + fmt(result.Vmin, 3) +
-          " at x ≈ " + fmt(result.xVmin, 3));
-        lines.push("");
-
-        lines.push("Moment envelope (sagging positive by sign convention):");
-        lines.push("  M_max (most positive) = " + fmt(result.Mmax, 3) +
-          " at x ≈ " + fmt(result.xMmax, 3));
-        lines.push("  M_min (most negative) = " + fmt(result.Mmin, 3) +
-          " at x ≈ " + fmt(result.xMmin, 3));
-        lines.push("");
-        lines.push("Remember to convert these to the appropriate design values for " + designMethod + ".");
-        lines.push("");
-
-        document.getElementById("resultsOutput").textContent = lines.join("\n");
-
-        // Formulas used – symbolic, showing the load locations
-        var f = [];
-        f.push("ASSUMPTIONS");
-        f.push("-----------");
-        f.push("Simple span beam with supports at x = 0 and x = L.");
-        f.push("Uniform load w on segment [a, b] (downward).");
-        f.push("Point load P at x = x_P (downward).");
-        f.push("");
-        f.push("RESULTANT OF UNIFORM LOAD");
-        f.push("  L_u = b − a");
-        f.push("  W   = w · L_u");
-        f.push("  x_c = (a + b) / 2   (centroid of uniform segment)");
-        f.push("");
-        f.push("REACTIONS (from ΣM_A = 0 and ΣV = 0):");
-        f.push("  R_B = ( W · x_c + P · x_P ) / L");
-        f.push("  R_A = W + P − R_B");
-        f.push("");
-        f.push("SHEAR (upward positive):");
-        f.push("  Let L_u(x) = max(0, min(x, b) − a) be the length of loaded segment to the left of x.");
-        f.push("  Let H(x − x_P) be the Heaviside step function (0 for x < x_P, 1 for x ≥ x_P).");
-        f.push("");
-        f.push("  V(x) = R_A − w · L_u(x) − P · H(x − x_P)");
-        f.push("");
-        f.push("MOMENT (sagging positive):");
-        f.push("  Contribution from R_A:       M_RA(x) = R_A · x");
-        f.push("  Contribution from uniform w: M_w(x)  ≈ W_x · (x − x_c(x)), where");
-        f.push("    W_x   = w · L_u(x)");
-        f.push("    x_c(x) =");
-        f.push("      (a + x)/2   for a < x < b  (centroid of the partial segment [a, x])");
-        f.push("      (a + b)/2   for x ≥ b      (full segment [a, b])");
-        f.push("");
-        f.push("  Contribution from point P:   M_P(x) = P · max(0, x − x_P)");
-        f.push("");
-        f.push("  Total moment:");
-        f.push("    M(x) = M_RA(x) − M_w(x) − M_P(x)");
-        f.push("");
-        f.push("LOCAL COORDINATE INSIDE THE UNIFORM LOAD (USED IN THE QUIZ):");
-        f.push("  Let z = x − a,  0 ≤ z ≤ L_u.");
-        f.push("  Then the contribution of the uniform load alone can be written as:");
-        f.push("    V_w(z) = w · z");
-        f.push("    M_w(z) = w · z² / 2");
-        f.push("  which is why the beam got so offended when you tried to use x instead of z.");
-
-        document.getElementById("formulaOutput").textContent = f.join("\n");
-
-        showStatus("Math accepted. Results and formulas updated below.", "success");
-      }
-
-      document.getElementById("btnCheckMoment").addEventListener("click", handleCheckMoment);
-      document.getElementById("btnCheckShear").addEventListener("click", handleCheckShear);
-      document.getElementById("btnCompute").addEventListener("click", computeAndDisplay);
-    })();
+    document.getElementById("btnRun").addEventListener("click", runBeamCheck);
+    document.getElementById("btnClear").addEventListener("click", clearAll);
   </script>
 </body>
 </html>
