@@ -2,967 +2,722 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Wood Beams – Slowest Calculator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wood Beams – The World’s Slowest Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Basic styles -->
   <style>
+    :root {
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --border: #d0d0d5;
+      --accent: #1f6feb;
+      --accent-soft: rgba(31, 111, 235, 0.08);
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --danger: #b91c1c;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-soft: 0 14px 30px rgba(15, 23, 42, 0.08);
+    }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f3f6fb;
-      color: #0c223f;
-    }
-    header {
-      background: #1450b8;
-      color: #ffffff;
-      padding: 1.5rem 2rem;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      letter-spacing: 0.05em;
-    }
-    header p {
-      margin: 0.2rem 0 0;
-      opacity: 0.9;
+      background: radial-gradient(circle at top, #e5edff 0, #f5f5f7 55%);
+      color: var(--text-main);
     }
 
-    main {
+    .app {
       max-width: 980px;
-      margin: 1.5rem auto 3rem;
-      padding: 0 1rem 3rem;
+      margin: 0 auto;
+      padding: 2.5rem 1rem 3rem;
     }
 
-    .step-nav {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      overflow-x: auto;
+    header {
+      margin-bottom: 1.75rem;
+      text-align: left;
     }
-    .step-chip {
-      padding: 0.45rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid #c5d4f0;
-      background: #e4ecff;
-      font-size: 0.85rem;
-      white-space: nowrap;
-      cursor: pointer;
-      user-select: none;
+
+    header h1 {
+      margin: 0 0 0.35rem;
+      font-size: 1.9rem;
+      letter-spacing: 0.03em;
     }
-    .step-chip.active {
-      background: #1450b8;
-      border-color: #1450b8;
-      color: #ffffff;
+
+    .tagline {
+      margin: 0 0 0.35rem;
+      font-size: 0.98rem;
       font-weight: 600;
-    }
-    .step-chip.completed {
-      background: #18a06a;
-      border-color: #18a06a;
-      color: #ffffff;
+      color: #f59e0b;
     }
 
-    .step {
-      display: none;
-    }
-    .step.active {
-      display: block;
+    header p {
+      margin: 0;
+      color: var(--text-muted);
+      max-width: 720px;
+      font-size: 0.95rem;
     }
 
     .card {
-      background: #ffffff;
-      padding: 1.5rem 1.75rem;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(15, 35, 70, 0.04);
-      margin-bottom: 1.25rem;
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 1.4rem 1.5rem 1.7rem;
+      margin-bottom: 1.4rem;
+      border: 1px solid rgba(148,163,184,0.3);
     }
 
-    h2 {
-      margin-top: 0;
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-    }
-    h3 {
-      margin: 1rem 0 0.6rem;
-      font-size: 1.05rem;
-    }
-    p {
-      margin: 0.4rem 0;
-      line-height: 1.5;
+    .card h2 {
+      margin: 0 0 0.7rem;
+      font-size: 1.2rem;
     }
 
-    .grid-2 {
+    .card h3 {
+      margin: 0.3rem 0 0.3rem;
+      font-size: 1.0rem;
+    }
+
+    .sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0 0 0.6rem;
+    }
+
+    .grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.6rem 1rem;
+      margin-top: 0.4rem;
     }
 
-    label {
-      font-size: 0.9rem;
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-    input[type="number"],
-    input[type="text"],
-    select {
-      width: 100%;
-      padding: 0.4rem 0.55rem;
-      border-radius: 6px;
-      border: 1px solid #c7d2e5;
-      font-size: 0.9rem;
+    .field {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.85rem;
     }
 
-    .radio-row {
+    .field label {
+      margin-bottom: 0.14rem;
+      color: var(--text-muted);
+    }
+
+    .field input,
+    .field select {
+      padding: 0.35rem 0.45rem;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      font-size: 0.85rem;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+      background: #ffffff;
+    }
+
+    .inline-radio {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      color: var(--text-muted);
+    }
+
+    .inline-radio label {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      margin: 0.2rem 0;
-      font-size: 0.9rem;
+      gap: 0.25rem;
+      cursor: pointer;
     }
 
-    .pill-toggle {
-      display: inline-flex;
-      border-radius: 999px;
-      border: 1px solid #c5d4f0;
-      overflow: hidden;
-      margin-top: 0.25rem;
-    }
-    .pill-toggle button {
-      border: none;
-      padding: 0.35rem 0.85rem;
-      background: transparent;
+    .eq-block {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(255,255,255,0.9);
+      padding: 0.75rem 0.9rem;
+      margin-top: 0.7rem;
       font-size: 0.85rem;
-      cursor: pointer;
-    }
-    .pill-toggle button.active {
-      background: #1450b8;
-      color: #ffffff;
     }
 
-    .btn-primary {
-      display: inline-block;
-      padding: 0.65rem 1.5rem;
-      border-radius: 999px;
-      border: none;
-      background: #f4c542;
-      color: #111827;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      margin-top: 1rem;
-      box-shadow: 0 6px 0 #d9a926;
-    }
-    .btn-primary:active {
-      transform: translateY(1px);
-      box-shadow: 0 4px 0 #d9a926;
-    }
-    .btn-secondary {
-      border-radius: 999px;
-      border: 1px solid #c5d4f0;
-      background: #eef3ff;
-      padding: 0.5rem 1.2rem;
-      font-size: 0.85rem;
-      margin-left: 0.75rem;
-      cursor: pointer;
-      margin-top: 1rem;
+    .eq-options {
+      margin-top: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
     }
 
-    .feedback {
-      margin-top: 0.75rem;
-      font-size: 0.9rem;
-      padding: 0.6rem 0.8rem;
-      border-radius: 8px;
-      background: #f5f7ff;
-      border-left: 3px solid #c5d4f0;
-    }
-    .feedback.ok {
-      background: #ebf9f3;
-      border-left-color: #18a06a;
-    }
-    .feedback.error {
-      background: #fff5f5;
-      border-left-color: #e02424;
+    .eq-options label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.35rem;
+      cursor: pointer;
     }
 
-    .small-note {
+    .eq-options code {
       font-size: 0.8rem;
-      color: #6b7280;
-      margin-top: 0.3rem;
     }
 
-    .report-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-      margin-top: 0.75rem;
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 0.9rem;
     }
-    .report-table th,
-    .report-table td {
-      border: 1px solid #d1d5db;
-      padding: 0.35rem 0.5rem;
-      text-align: left;
-    }
-    .badge-pass, .badge-fail {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
+
+    button {
       border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-left: 0.3rem;
-    }
-    .badge-pass {
-      background: #ebf9f3;
-      color: #166534;
-    }
-    .badge-fail {
-      background: #fef2f2;
-      color: #b91c1c;
+      border: none;
+      padding: 0.55rem 1.15rem;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
     }
 
-    @media (max-width: 720px) {
-      .grid-2 {
-        grid-template-columns: minmax(0, 1fr);
+    button.primary {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 10px 18px rgba(31,111,235,0.35);
+    }
+
+    button.secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+
+    .mono-block {
+      width: 100%;
+      min-height: 180px;
+      font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: #0f172a;
+      color: #e5e7eb;
+      box-shadow: inset 0 0 0 1px rgba(15,23,42,0.8);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .mono-block.small {
+      min-height: 120px;
+      margin-top: 0.5rem;
+    }
+
+    .copy-status {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+      min-height: 1em;
+    }
+
+    .copy-status.success { color: #059669; }
+    .copy-status.error { color: var(--danger); }
+
+    footer {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    @media (max-width: 640px) {
+      .app { padding-inline: 0.8rem; }
+      header h1 { font-size: 1.6rem; }
+      button.primary,
+      button.secondary {
+        flex: 1 1 auto;
+        justify-content: center;
       }
-      header {
-        padding: 1.25rem 1.25rem;
-      }
-      main {
-        padding: 0 0.75rem 2.5rem;
+      .mono-block {
+        min-height: 160px;
       }
     }
   </style>
-
-  <!-- MathJax for LaTeX rendering -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-
 <body>
-  <header>
-    <h1>WOOD BEAMS</h1>
-    <p>The world’s slowest calculator and fastest learning tool.</p>
-  </header>
+  <div class="app">
+    <header>
+      <h1>Wood Beams</h1>
+      <p class="tagline">The world’s slowest calculator and fastest learning tool.</p>
+      <p>
+        Simple-span wood beam trainer. Enter geometry and loads, then earn your answer by picking the
+        correct internal force equations first.
+      </p>
+    </header>
 
-  <main>
-    <!-- Step nav -->
-    <div class="step-nav">
-      <div class="step-chip active" data-step="0">Step 0 · Choose Beam</div>
-      <div class="step-chip" data-step="1">Step 1 · Moment</div>
-      <div class="step-chip" data-step="2">Step 2 · Shear</div>
-      <div class="step-chip" data-step="3">Step 3 · Deflection</div>
-      <div class="step-chip" data-step="4">Report</div>
-    </div>
-
-    <!-- STEP 0: CHOOSE BEAM -->
-    <section class="step active" id="step-0">
-      <div class="card">
-        <h2>Step 0 of 4 – Choose Your Beam</h2>
-        <p>Set up a simple-span wood beam with uniform load. We’ll walk through the math step by step.</p>
-
-        <div class="grid-2">
-          <div>
-            <h3>Geometry &amp; Material</h3>
-            <label>Span length \(L\) (ft)</label>
-            <input type="number" id="L-ft" value="16" step="0.1" />
-
-            <label style="margin-top:0.6rem;">Width \(b\) (in)</label>
-            <input type="number" id="b-in" value="3.5" step="0.01" />
-
-            <label style="margin-top:0.6rem;">Depth \(d\) (in)</label>
-            <input type="number" id="d-in" value="11.25" step="0.01" />
-
-            <label style="margin-top:0.6rem;">Species / grade</label>
-            <select id="species">
-              <option>No. 2 DF-L (example)</option>
-              <option>No. 2 SPF</option>
-              <option>No. 1 Southern Pine</option>
-            </select>
-
-            <label style="margin-top:0.6rem;">Design method</label>
-            <div class="pill-toggle" id="design-method-toggle">
-              <button type="button" data-value="ASD" class="active">ASD</button>
-              <button type="button" data-value="LRFD">LRFD</button>
-            </div>
-
-            <div class="small-note">
-              Right now we’ll behave like ASD (service-level stresses), even if you flip to LRFD.
-            </div>
-          </div>
-
-          <div>
-            <h3>Loads &amp; Derived Section Properties</h3>
-            <label>Dead load \(w_D\) (lb/ft)</label>
-            <input type="number" id="wD" value="200" step="5" />
-
-            <label style="margin-top:0.6rem;">Live load \(w_L\) (lb/ft)</label>
-            <input type="number" id="wL" value="400" step="5" />
-
-            <p class="small-note">
-              For ASD we’ll start with \( w = 1.0 w_D + 1.0 w_L \).
-            </p>
-
-            <div id="derived-properties" class="small-note" style="margin-top:0.75rem;">
-              <!-- Filled by JS -->
-            </div>
-          </div>
+    <!-- 1: GEOMETRY & MATERIAL -->
+    <section class="card">
+      <h2>1. Geometry &amp; material</h2>
+      <p class="sub">Basic span and design settings. Units are up to you, just stay consistent.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="L">Span length, L</label>
+          <input id="L" type="number" step="0.01" placeholder="e.g. 16 (ft)" />
         </div>
-
-        <button class="btn-primary" id="btn-to-moment">Start with Moment</button>
+        <div class="field">
+          <label for="species">Species / grade (optional)</label>
+          <input id="species" type="text" placeholder="e.g. DF No. 2" />
+        </div>
+        <div class="field">
+          <label for="designMethod">Design method</label>
+          <select id="designMethod">
+            <option value="ASD">ASD</option>
+            <option value="LRFD">LRFD</option>
+          </select>
+        </div>
       </div>
     </section>
 
-    <!-- STEP 1: MOMENT -->
-    <section class="step" id="step-1">
-      <div class="card">
-        <h2>Step 1 of 4 – Moment &amp; Bending</h2>
+    <!-- 2: LOADS -->
+    <section class="card">
+      <h2>2. Loads on the beam</h2>
+      <p class="sub">
+        Simple span with optional uniform load over a segment and an optional point load. All loads are
+        assumed downward.
+      </p>
 
-        <h3>1. Maximum moment \(M_{\max}\)</h3>
-        <p>For a simply supported beam with uniform load \(w\) (lb/ft) over span \(L\) (ft), pick the correct formula for the <strong>maximum bending moment</strong> \(M_{\max}\).</p>
-
-        <div class="radio-row">
-          <input type="radio" name="momentFormula" id="momA" value="correct" />
-          <label for="momA">\( M_{\max} = \dfrac{w L^{2}}{8} \)</label>
+      <h3>2A. Segment uniform load</h3>
+      <div class="grid">
+        <div class="field">
+          <label for="wUniform">Uniform load, w (force / length)</label>
+          <input id="wUniform" type="number" step="0.01" placeholder="e.g. 0.8 (k/ft or kip/ft)" />
         </div>
-        <div class="radio-row">
-          <input type="radio" name="momentFormula" id="momB" value="wrong1" />
-          <label for="momB">\( M_{\max} = \dfrac{w L}{8} \)</label>
-        </div        >
-        <div class="radio-row">
-          <input type="radio" name="momentFormula" id="momC" value="wrong2" />
-          <label for="momC">\( M_{\max} = \dfrac{w L^{2}}{2} \)</label>
+        <div class="field">
+          <label for="wStart">Uniform load start, a (from left support)</label>
+          <input id="wStart" type="number" step="0.01" placeholder="e.g. 0" />
         </div>
-        <p class="small-note">Units check: \(w\,[\text{lb/ft}] \times L^{2}[\text{ft}^2] \Rightarrow \text{lb·ft}\).</p>
-
-        <hr style="margin:1.25rem 0; border:none; border-top:1px solid #e5e7eb;">
-
-        <h3>2. Section modulus \(S\)</h3>
-        <p>For a rectangular section of width \(b\) and depth \(d\), choose the correct section modulus.</p>
-        <div class="radio-row">
-          <input type="radio" name="SFormula" id="sA" value="correct" />
-          <label for="sA">\( S = \dfrac{b d^{2}}{6} \)</label>
+        <div class="field">
+          <label for="wEnd">Uniform load end, b (from left support)</label>
+          <input id="wEnd" type="number" step="0.01" placeholder="e.g. 16" />
         </div>
-        <div class="radio-row">
-          <input type="radio" name="SFormula" id="sB" value="wrong1" />
-          <label for="sB">\( S = \dfrac{b d}{6} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="SFormula" id="sC" value="wrong2" />
-          <label for="sC">\( S = \dfrac{b d^{3}}{12} \)</label>
-        </div>
-
-        <h3>3. Bending stress \(f_b\)</h3>
-        <p>Pick the correct relationship between \(f_b\), \(M_{\max}\) and \(S\).</p>
-        <div class="radio-row">
-          <input type="radio" name="fbFormula" id="fbA" value="correct" />
-          <label for="fbA">\( f_b = \dfrac{M_{\max}}{S} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="fbFormula" id="fbB" value="wrong1" />
-          <label for="fbB">\( f_b = \dfrac{S}{M_{\max}} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="fbFormula" id="fbC" value="wrong2" />
-          <label for="fbC">\( f_b = M_{\max} \, S \)</label>
-        </div>
-
-        <h3>4. Adjusted allowable stress \(F'_b\)</h3>
-        <p>For ASD bending per NDS, choose the correct expression for adjusted allowable bending stress.</p>
-        <div class="radio-row">
-          <input type="radio" name="FbAdjFormula" id="FbA" value="correct" />
-          <label for="FbA">\( F'_b = F_b \, C_D \, C_M \, C_t \, C_F \, C_i \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="FbAdjFormula" id="FbB" value="wrong1" />
-          <label for="FbB">\( F'_b = \dfrac{F_b}{C_D C_M C_t} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="FbAdjFormula" id="FbC" value="wrong2" />
-          <label for="FbC">\( F'_b = F_b \, C_D \)</label>
-        </div>
-
-        <h3>5. Pass / fail inequality</h3>
-        <p>Which inequality represents a <strong>passing</strong> bending check in ASD?</p>
-        <div class="radio-row">
-          <input type="radio" name="ineq" id="ineqA" value="correct" />
-          <label for="ineqA">\( f_b \le F'_b \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="ineq" id="ineqB" value="wrong1" />
-          <label for="ineqB">\( f_b \ge F'_b \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="ineq" id="ineqC" value="wrong2" />
-          <label for="ineqC">Beam passes only if \( f_b = F'_b \) exactly.</label>
-        </div>
-
-        <h3 style="margin-top:1.25rem;">Optional: design values for the report</h3>
-        <div class="grid-2">
-          <div>
-            <label>Base bending stress \(F_b\) (psi)</label>
-            <input type="number" id="Fb-base" value="1000" step="10" />
-          </div>
-          <div>
-            <label>Duration factor \(C_D\)</label>
-            <input type="number" id="Cd-b" value="1.0" step="0.05" />
-          </div>
-          <div>
-            <label>Moisture factor \(C_M\)</label>
-            <input type="number" id="Cm-b" value="1.0" step="0.05" />
-          </div>
-          <div>
-            <label>Temperature factor \(C_t\)</label>
-            <input type="number" id="Ct-b" value="1.0" step="0.05" />
-          </div>
-          <div>
-            <label>Size factor \(C_F\)</label>
-            <input type="number" id="Cf-b" value="1.0" step="0.05" />
-          </div>
-          <div>
-            <label>Incising factor \(C_i\)</label>
-            <input type="number" id="Ci-b" value="1.0" step="0.05" />
-          </div>
-        </div>
-
-        <button class="btn-primary" id="btn-check-moment">Check Moment</button>
-        <button class="btn-secondary" id="btn-to-shear" style="display:none;">Next: Check Shear</button>
-
-        <div id="moment-feedback" class="feedback" style="display:none;"></div>
       </div>
+      <p class="sub" style="margin-top:0.4rem;">
+        Tip: full-length load = set <em>a = 0</em> and <em>b = L</em>. Leave w = 0 to ignore the uniform load.
+      </p>
+
+      <h3>2B. Point load</h3>
+      <div class="grid">
+        <div class="field">
+          <label for="Ppoint">Point load, P (force)</label>
+          <input id="Ppoint" type="number" step="0.01" placeholder="e.g. 5 (kips)" />
+        </div>
+        <div class="field">
+          <label for="Px">Point load location, x<sub>P</sub> (from left)</label>
+          <input id="Px" type="number" step="0.01" placeholder="e.g. 8" />
+        </div>
+      </div>
+
+      <p class="sub" style="margin-top:0.4rem;">
+        All loads are treated as downward. The beam is simply supported at x = 0 and x = L.
+      </p>
     </section>
 
-    <!-- STEP 2: SHEAR -->
-    <section class="step" id="step-2">
-      <div class="card">
-        <h2>Step 2 of 4 – Shear</h2>
+    <!-- 3: EQUATION CHOICES -->
+    <section class="card">
+      <h2>3. Pick the internal force equations</h2>
+      <p class="sub">
+        Before the beam will give you numbers, you have to pick the correct equations for the uniform load.
+        We’ll only look at the <em>uniform load part</em> here and call the local coordinate from the start of
+        that load <code>z</code>.
+      </p>
 
-        <h3>1. Maximum shear \(V_{\max}\)</h3>
-        <p>For the same simple span and uniform load, what is the <strong>maximum end reaction / shear</strong> \(V_{\max}\)?</p>
-
-        <div class="radio-row">
-          <input type="radio" name="VFormula" id="V1" value="correct" />
-          <label for="V1">\( V_{\max} = \dfrac{w L}{2} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="VFormula" id="V2" value="wrong1" />
-          <label for="V2">\( V_{\max} = w L^{2} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="VFormula" id="V3" value="wrong2" />
-          <label for="V3">\( V_{\max} = \dfrac{w}{2 L} \)</label>
-        </div>
-
-        <h3>2. Shear stress \(f_v\) in a rectangular section</h3>
-        <p>For a rectangular section of area \(A = b d\), pick the correct average shear stress expression used in NDS.</p>
-
-        <div class="radio-row">
-          <input type="radio" name="fvFormula" id="fv1" value="correct" />
-          <label for="fv1">\( f_v = \dfrac{3}{2}\dfrac{V_{\max}}{A} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="fvFormula" id="fv2" value="wrong1" />
-          <label for="fv2">\( f_v = \dfrac{V_{\max}}{S} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="fvFormula" id="fv3" value="wrong2" />
-          <label for="fv3">\( f_v = \dfrac{M_{\max}}{b d} \)</label>
-        </div>
-
-        <h3>3. Adjusted allowable shear \(F'_v\)</h3>
-        <p>Choose the correct expression for adjusted allowable shear stress in ASD.</p>
-        <div class="radio-row">
-          <input type="radio" name="FvAdjFormula" id="Fv1" value="correct" />
-          <label for="Fv1">\( F'_v = F_v \, C_D \, C_M \, C_t \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="FvAdjFormula" id="Fv2" value="wrong1" />
-          <label for="Fv2">\( F'_v = \dfrac{F_v}{C_D C_M} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="FvAdjFormula" id="Fv3" value="wrong2" />
-          <label for="Fv3">\( F'_v = F_v C_D C_M C_t C_F \)</label>
-        </div>
-
-        <h3>4. Pass / fail inequality</h3>
-        <p>Which inequality represents a <strong>passing</strong> shear check in ASD?</p>
-        <div class="radio-row">
-          <input type="radio" name="ineqShear" id="ineqSv1" value="correct" />
-          <label for="ineqSv1">\( f_v \le F'_v \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="ineqShear" id="ineqSv2" value="wrong1" />
-          <label for="ineqSv2">\( f_v \ge F'_v \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="ineqShear" id="ineqSv3" value="wrong2" />
-          <label for="ineqSv3">Check passes only if \( f_v = F'_v \).</label>
-        </div>
-
-        <h3 style="margin-top:1.25rem;">Optional: design values for the report</h3>
-        <div class="grid-2">
-          <div>
-            <label>Base shear stress \(F_v\) (psi)</label>
-            <input type="number" id="Fv-base" value="135" step="5" />
-          </div>
-          <div>
-            <label>Duration factor \(C_D\)</label>
-            <input type="number" id="Cd-v" value="1.0" step="0.05" />
-          </div>
-          <div>
-            <label>Moisture factor \(C_M\)</label>
-            <input type="number" id="Cm-v" value="1.0" step="0.05" />
-          </div>
-          <div>
-            <label>Temperature factor \(C_t\)</label>
-            <input type="number" id="Ct-v" value="1.0" step="0.05" />
-          </div>
-        </div>
-
-        <button class="btn-primary" id="btn-check-shear">Check Shear</button>
-        <button class="btn-secondary" id="btn-to-deflection" style="display:none;">Next: Check Deflection</button>
-
-        <div id="shear-feedback" class="feedback" style="display:none;"></div>
-      </div>
-    </section>
-
-    <!-- STEP 3: DEFLECTION -->
-    <section class="step" id="step-3">
-      <div class="card">
-        <h2>Step 3 of 4 – Deflection</h2>
-
-        <h3>1. Maximum deflection \( \Delta_{\max} \)</h3>
-        <p>For the same simple span and uniform load, choose the correct formula for maximum deflection at midspan.</p>
-
-        <div class="radio-row">
-          <input type="radio" name="DeltaFormula" id="D1" value="correct" />
-          <label for="D1">\( \Delta_{\max} = \dfrac{5 w L^{4}}{384 E I} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="DeltaFormula" id="D2" value="wrong1" />
-          <label for="D2">\( \Delta_{\max} = \dfrac{w L^{3}}{48 E I} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="DeltaFormula" id="D3" value="wrong2" />
-          <label for="D3">\( \Delta_{\max} = \dfrac{w L^{4}}{8 E I} \)</label>
-        </div>
-
-        <h3>2. Deflection limit</h3>
-        <p>For a floor supporting typical finishes, pick a common live-load deflection limit.</p>
-
-        <div class="radio-row">
-          <input type="radio" name="DeflLimitFormula" id="DL1" value="correct" />
-          <label for="DL1">\( \Delta_{\text{allow}} = \dfrac{L}{360} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="DeflLimitFormula" id="DL2" value="wrong1" />
-          <label for="DL2">\( \Delta_{\text{allow}} = \dfrac{L}{120} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="DeflLimitFormula" id="DL3" value="wrong2" />
-          <label for="DL3">\( \Delta_{\text{allow}} = \dfrac{L}{60} \)</label>
-        </div>
-
-        <h3>3. Pass / fail inequality</h3>
-        <p>Which inequality represents a <strong>passing</strong> deflection check?</p>
-        <div class="radio-row">
-          <input type="radio" name="DeflIneq" id="DI1" value="correct" />
-          <label for="DI1">\( \Delta_{\max} \le \Delta_{\text{allow}} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="DeflIneq" id="DI2" value="wrong1" />
-          <label for="DI2">\( \Delta_{\max} \ge \Delta_{\text{allow}} \)</label>
-        </div>
-        <div class="radio-row">
-          <input type="radio" name="DeflIneq" id="DI3" value="wrong2" />
-          <label for="DI3">Check passes only if \( \Delta_{\max} = \Delta_{\text{allow}} \).</label>
-        </div>
-
-        <h3 style="margin-top:1.25rem;">Optional: stiffness values for the report</h3>
-        <div class="grid-2">
-          <div>
-            <label>Elastic modulus \(E\) (psi)</label>
-            <input type="number" id="E-psi" value="1600000" step="50000" />
-          </div>
-          <div>
-            <label>Deflection limit ratio (e.g. 360 for \(L/360\))</label>
-            <input type="number" id="defl-ratio" value="360" step="10" />
-          </div>
-        </div>
-
-        <button class="btn-primary" id="btn-check-deflection">Check Deflection</button>
-        <button class="btn-secondary" id="btn-to-report" style="display:none;">Create Report</button>
-
-        <div id="deflection-feedback" class="feedback" style="display:none;"></div>
-      </div>
-    </section>
-
-    <!-- STEP 4: REPORT -->
-    <section class="step" id="step-4">
-      <div class="card">
-        <h2>Beam Report</h2>
-        <p>Summary of your beam, loads, and conceptual + numeric checks.</p>
-
-        <h3>Inputs</h3>
-        <table class="report-table">
-          <tbody>
-            <tr><th>Span \(L\)</th><td id="r-L"></td></tr>
-            <tr><th>Section</th><td id="r-section"></td></tr>
-            <tr><th>Loads</th><td id="r-loads"></td></tr>
-          </tbody>
-        </table>
-
-        <h3 style="margin-top:1.25rem;">Numeric Results (prototype)</h3>
-        <table class="report-table">
-          <thead>
-            <tr><th>Quantity</th><th>Value</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Maximum moment \(M_{\max}\)</td><td id="r-M"></td></tr>
-            <tr><td>Maximum shear \(V_{\max}\)</td><td id="r-V"></td></tr>
-            <tr><td>Maximum deflection \(\Delta_{\max}\)</td><td id="r-Delta"></td></tr>
-            <tr><td>Section modulus \(S\)</td><td id="r-S"></td></tr>
-            <tr><td>Moment of inertia \(I\)</td><td id="r-I"></td></tr>
-            <tr><td>Bending stress \(f_b\)</td><td id="r-fb"></td></tr>
-            <tr><td>Allowable bending \(F'_b\)</td><td id="r-Fb"></td></tr>
-            <tr><td>Shear stress \(f_v\)</td><td id="r-fv"></td></tr>
-            <tr><td>Allowable shear \(F'_v\)</td><td id="r-Fv"></td></tr>
-            <tr><td>Deflection limit \(\Delta_{\text{allow}}\)</td><td id="r-Delta-allow"></td></tr>
-          </tbody>
-        </table>
-
-        <h3 style="margin-top:1.25rem;">Conceptual Checks</h3>
-        <table class="report-table">
-          <thead>
-            <tr><th>Topic</th><th>Status</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Moment &amp; bending logic</td><td id="r-moment-status"></td></tr>
-            <tr><td>Shear logic</td><td id="r-shear-status"></td></tr>
-            <tr><td>Deflection logic</td><td id="r-defl-status"></td></tr>
-          </tbody>
-        </table>
-
-        <p class="small-note" style="margin-top:1rem;">
-          If this felt like a lot of steps for one beam, congratulations: you’re thinking like a structural engineer.
+      <div class="eq-block">
+        <h3>3A. Bending moment from the uniform load</h3>
+        <p>
+          For a uniform load of intensity <code>w</code> acting over a segment of length
+          <code>L<sub>u</sub></code>, measured from its start as <code>z = x − a</code>, what is the
+          internal bending moment from <em>that uniform load alone</em> for <code>0 ≤ z ≤ L<sub>u</sub></code>?
         </p>
+        <div class="eq-options">
+          <label>
+            <input type="radio" name="momentEq" id="momentCorrect" />
+            <span>
+              <code>M<sub>w</sub>(z) = w·z² / 2</code> &nbsp;– uses distance measured from the start of the load.
+            </span>
+          </label>
+          <label>
+            <input type="radio" name="momentEq" id="momentWrong" />
+            <span>
+              <code>M<sub>w</sub>(z) = w·x² / 2</code> &nbsp;– treats the load as if it always starts at the
+              left support.
+            </span>
+          </label>
+        </div>
+        <div class="button-row" style="margin-top:0.6rem;">
+          <button class="secondary" type="button" id="btnCheckMoment">Check moment equation</button>
+        </div>
+      </div>
+
+      <div class="eq-block">
+        <h3>3B. Shear from the uniform load</h3>
+        <p>
+          For that same uniform load, again using <code>z</code> measured from the start of the load, what is
+          the internal shear from the uniform load alone?
+        </p>
+        <div class="eq-options">
+          <label>
+            <input type="radio" name="shearEq" id="shearCorrect" />
+            <span>
+              <code>V<sub>w</sub>(z) = w·z</code> &nbsp;– starts at zero at the beginning of the load.
+            </span>
+          </label>
+          <label>
+            <input type="radio" name="shearEq" id="shearWrong" />
+            <span>
+              <code>V<sub>w</sub>(z) = w·x</code> &nbsp;– again pretending the load starts at the support.
+            </span>
+          </label>
+        </div>
+        <div class="button-row" style="margin-top:0.6rem;">
+          <button class="secondary" type="button" id="btnCheckShear">Check shear equation</button>
+        </div>
+      </div>
+
+      <div id="equationStatus" class="copy-status" aria-live="polite"></div>
+
+      <div class="button-row">
+        <button class="primary" type="button" id="btnCompute">
+          ✅ Compute reactions, V-max, M-max & mini-report
+        </button>
       </div>
     </section>
-  </main>
 
-  <!-- App logic -->
+    <!-- 4: RESULTS -->
+    <section class="card">
+      <h2>4. Results & mini-report</h2>
+      <p class="sub">
+        Numeric results based on your loads, plus the (slightly nerdy) formulas used under the hood.
+      </p>
+      <pre id="resultsOutput" class="mono-block"></pre>
+
+      <h3>Formulas used (symbolic)</h3>
+      <pre id="formulaOutput" class="mono-block small"></pre>
+    </section>
+
+    <footer>
+      Wood Beams Trainer – simple span with w(a→b) + P at x<sub>P</sub>. Check your math, not just the answers.
+    </footer>
+  </div>
+
   <script>
-    const state = {
-      method: "ASD",
-      conceptual: {
-        moment: false,
-        shear: false,
-        deflection: false,
-      },
-    };
+    (function () {
+      let momentOk = false;
+      let shearOk = false;
 
-    // ----- helpers -----
-    function selectStep(stepIndex) {
-      document.querySelectorAll(".step").forEach(sec => {
-        sec.classList.remove("active");
-      });
-      document.querySelector(`#step-${stepIndex}`).classList.add("active");
-
-      document.querySelectorAll(".step-chip").forEach(chip => {
-        const s = Number(chip.dataset.step);
-        chip.classList.remove("active");
-        if (s === stepIndex) chip.classList.add("active");
-      });
-
-      if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise();
+      function num(id) {
+        var v = parseFloat(document.getElementById(id).value);
+        return isNaN(v) ? null : v;
       }
-    }
 
-    function updateDerived() {
-      const Lft = Number(document.getElementById("L-ft").value || 0);
-      const Lin = Lft * 12;
-      const b = Number(document.getElementById("b-in").value || 0);
-      const d = Number(document.getElementById("d-in").value || 0);
+      function str(id) {
+        return (document.getElementById(id).value || "").trim();
+      }
 
-      const wD = Number(document.getElementById("wD").value || 0);
-      const wL = Number(document.getElementById("wL").value || 0);
-      const w = wD + wL;
+      function fmt(x, digits) {
+        if (x === null || x === undefined || isNaN(x)) return "N/A";
+        return x.toFixed(digits != null ? digits : 3);
+      }
 
-      const A = b * d;
-      const S = (b * d * d) / 6;
-      const I = (b * d * d * d) / 12;
+      /**
+       * Compute reactions and envelopes for:
+       * - simple span beam length L
+       * - uniform load w from a to b (downward)
+       * - point load P at xP (downward)
+       */
+      function computeBeam(L, w, a, b, P, xP) {
+        const hasUniform = w !== null && Math.abs(w) > 0 && a !== null && b !== null && b > a;
+        const hasPoint = P !== null && Math.abs(P) > 0 && xP !== null;
 
-      const div = document.getElementById("derived-properties");
-      div.innerHTML = `
-        <strong>Derived values (geom only):</strong><br>
-        L = ${Lft.toFixed(2)} ft = ${Lin.toFixed(1)} in<br>
-        A = b d = ${A.toFixed(1)} in²<br>
-        S = b d² / 6 ≈ ${S.toFixed(1)} in³<br>
-        I = b d³ / 12 ≈ ${I.toFixed(1)} in⁴<br>
-        w = w_D + w_L = ${w.toFixed(1)} lb/ft
-      `;
-    }
+        const Lload = hasUniform ? (b - a) : 0;
+        const W = hasUniform ? w * Lload : 0;
+        const xc = hasUniform ? (a + b) / 2 : 0;
 
-    function showFeedback(id, message, ok) {
-      const box = document.getElementById(id);
-      box.style.display = "block";
-      box.textContent = message;
-      box.classList.remove("ok", "error");
-      if (ok === true) box.classList.add("ok");
-      else if (ok === false) box.classList.add("error");
-    }
+        const totalLoad = (hasUniform ? W : 0) + (hasPoint ? P : 0);
 
-    // ----- report calculations -----
-    function fillReport() {
-      const Lft = Number(document.getElementById("L-ft").value || 0);
-      const Lin = Lft * 12;
-      const b = Number(document.getElementById("b-in").value || 0);
-      const d = Number(document.getElementById("d-in").value || 0);
-      const wD = Number(document.getElementById("wD").value || 0);
-      const wL = Number(document.getElementById("wL").value || 0);
-      const w_ft = wD + wL;
-      const w_in = w_ft / 12;
-      const species = document.getElementById("species").value;
+        let RB = 0;
+        if (L > 0) {
+          const momentLoads = (hasUniform ? W * xc : 0) + (hasPoint ? P * xP : 0);
+          RB = momentLoads / L;
+        }
+        const RA = totalLoad - RB;
 
-      const A = b * d;
-      const S = (b * d * d) / 6;
-      const I = (b * d * d * d) / 12;
+        function seg(x) {
+          if (!hasUniform) return 0;
+          return Math.max(0, Math.min(x, b) - a);
+        }
 
-      // bending values
-      const M_lbft = w_ft * Lft * Lft / 8;
-      const M_kipft = M_lbft / 1000;
-      const M_lbin = M_lbft * 12;
-      const fb = S > 0 ? M_lbin / S : 0;
+        function shear(x) {
+          let V = RA;
+          if (hasUniform) {
+            V -= w * seg(x);
+          }
+          if (hasPoint && x >= xP) {
+            V -= P;
+          }
+          return V;
+        }
 
-      const Fb_base = Number(document.getElementById("Fb-base").value || 0);
-      const Cd_b = Number(document.getElementById("Cd-b").value || 1);
-      const Cm_b = Number(document.getElementById("Cm-b").value || 1);
-      const Ct_b = Number(document.getElementById("Ct-b").value || 1);
-      const Cf_b = Number(document.getElementById("Cf-b").value || 1);
-      const Ci_b = Number(document.getElementById("Ci-b").value || 1);
-      const Fb_adj = Fb_base * Cd_b * Cm_b * Ct_b * Cf_b * Ci_b;
+        function uniformMoment(x) {
+          if (!hasUniform) return 0;
+          const segLen = seg(x);
+          if (segLen <= 0) return 0;
 
-      // shear values
-      const V_lb = w_ft * Lft / 2;
-      const fv = A > 0 ? 1.5 * V_lb / A : 0;
+          let xCenter;
+          if (x < b) {
+            // centroid of segment [a, x]
+            xCenter = (a + x) / 2;
+          } else {
+            // full loaded length, centroid at mid of [a, b]
+            xCenter = xc;
+          }
+          const Wseg = w * segLen;
+          return Wseg * (x - xCenter);
+        }
 
-      const Fv_base = Number(document.getElementById("Fv-base").value || 0);
-      const Cd_v = Number(document.getElementById("Cd-v").value || 1);
-      const Cm_v = Number(document.getElementById("Cm-v").value || 1);
-      const Ct_v = Number(document.getElementById("Ct-v").value || 1);
-      const Fv_adj = Fv_base * Cd_v * Cm_v * Ct_v;
+        function moment(x) {
+          let M = RA * x;
+          if (hasUniform) {
+            M -= uniformMoment(x);
+          }
+          if (hasPoint && x >= xP) {
+            M -= P * (x - xP);
+          }
+          return M;
+        }
 
-      // deflection values
-      const E = Number(document.getElementById("E-psi").value || 0);
-      const ratio = Number(document.getElementById("defl-ratio").value || 360);
-      const Delta_max = (E > 0 && I > 0)
-        ? (5 * w_in * Math.pow(Lin, 4) / (384 * E * I))
-        : 0;
-      const Delta_allow = ratio > 0 ? Lin / ratio : 0;
+        const steps = 400;
+        let Vmax = -Infinity, Vmin = Infinity;
+        let xVmax = 0, xVmin = 0;
+        let Mmax = -Infinity, Mmin = Infinity;
+        let xMmax = 0, xMmin = 0;
 
-      // fill input summary
-      document.getElementById("r-L").textContent =
-        `${Lft.toFixed(2)} ft (${Lin.toFixed(1)} in)`;
-      document.getElementById("r-section").textContent =
-        `${b.toFixed(2)} in × ${d.toFixed(2)} in, ${species}`;
-      document.getElementById("r-loads").textContent =
-        `w_D = ${wD.toFixed(1)} lb/ft, w_L = ${wL.toFixed(1)} lb/ft, w = ${w_ft.toFixed(1)} lb/ft`;
+        for (let i = 0; i <= steps; i++) {
+          const x = (L * i) / steps;
+          const Vx = shear(x);
+          const Mx = moment(x);
 
-      // numeric table
-      document.getElementById("r-M").textContent =
-        `${M_kipft.toFixed(2)} kip·ft`;
-      document.getElementById("r-V").textContent =
-        `${V_lb.toFixed(0)} lb`;
-      document.getElementById("r-Delta").textContent =
-        `${Delta_max.toFixed(3)} in`;
-      document.getElementById("r-S").textContent =
-        `${S.toFixed(1)} in³`;
-      document.getElementById("r-I").textContent =
-        `${I.toFixed(1)} in⁴`;
-      document.getElementById("r-fb").textContent =
-        `${fb.toFixed(0)} psi`;
-      document.getElementById("r-Fb").textContent =
-        `${Fb_adj.toFixed(0)} psi`;
-      document.getElementById("r-fv").textContent =
-        `${fv.toFixed(1)} psi`;
-      document.getElementById("r-Fv").textContent =
-        `${Fv_adj.toFixed(1)} psi`;
-      document.getElementById("r-Delta-allow").textContent =
-        `${Delta_allow.toFixed(3)} in (L/${ratio.toFixed(0)})`;
+          if (Vx > Vmax) { Vmax = Vx; xVmax = x; }
+          if (Vx < Vmin) { Vmin = Vx; xVmin = x; }
 
-      // conceptual status
-      const momentCell = document.getElementById("r-moment-status");
-      const shearCell = document.getElementById("r-shear-status");
-      const deflCell = document.getElementById("r-defl-status");
+          if (Mx > Mmax) { Mmax = Mx; xMmax = x; }
+          if (Mx < Mmin) { Mmin = Mx; xMmin = x; }
+        }
 
-      momentCell.innerHTML = state.conceptual.moment
-        ? 'Moment logic passed<span class="badge-pass">OK</span>'
-        : 'Not yet passed<span class="badge-fail">Check math</span>';
+        return {
+          L, w, a, b, P, xP,
+          hasUniform,
+          hasPoint,
+          Lload,
+          W,
+          xc,
+          RA,
+          RB,
+          Vmax,
+          Vmin,
+          xVmax,
+          xVmin,
+          Mmax,
+          Mmin,
+          xMmax,
+          xMmin
+        };
+      }
 
-      shearCell.innerHTML = state.conceptual.shear
-        ? 'Shear logic passed<span class="badge-pass">OK</span>'
-        : 'Not yet passed<span class="badge-fail">Check math</span>';
+      function showStatus(message, type) {
+        var status = document.getElementById("equationStatus");
+        status.textContent = message || "";
+        status.className = "copy-status" + (type ? " " + type : "");
+      }
 
-      deflCell.innerHTML = state.conceptual.deflection
-        ? 'Deflection logic passed<span class="badge-pass">OK</span>'
-        : 'Not yet passed<span class="badge-fail">Check math</span>';
-    }
-
-    // ----- event wiring -----
-    document.addEventListener("DOMContentLoaded", () => {
-      updateDerived();
-
-      document.querySelectorAll("#L-ft,#b-in,#d-in,#wD,#wL").forEach(el => {
-        el.addEventListener("input", updateDerived);
-      });
-
-      document.querySelectorAll(".step-chip").forEach(chip => {
-        chip.addEventListener("click", () => {
-          const s = Number(chip.dataset.step);
-          selectStep(s);
-        });
-      });
-
-      // design method toggle
-      document.querySelectorAll("#design-method-toggle button").forEach(btn => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll("#design-method-toggle button")
-            .forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-          state.method = btn.dataset.value;
-        });
-      });
-
-      document.getElementById("btn-to-moment").addEventListener("click", () => {
-        selectStep(1);
-      });
-
-      // Moment check
-      document.getElementById("btn-check-moment").addEventListener("click", () => {
-        const moment = document.querySelector('input[name="momentFormula"]:checked');
-        const sForm = document.querySelector('input[name="SFormula"]:checked');
-        const fbForm = document.querySelector('input[name="fbFormula"]:checked');
-        const FbAdj = document.querySelector('input[name="FbAdjFormula"]:checked');
-        const ineq = document.querySelector('input[name="ineq"]:checked');
-
-        if (!moment || !sForm || !fbForm || !FbAdj || !ineq) {
-          showFeedback("moment-feedback", "Answer all five parts before checking.", false);
+      function handleCheckMoment() {
+        var choice = document.querySelector('input[name="momentEq"]:checked');
+        if (!choice) {
+          showStatus("Pick one of the moment options first – the beam can’t read your mind (yet).", "error");
           return;
         }
 
-        const allCorrect =
-          moment.value === "correct" &&
-          sForm.value === "correct" &&
-          fbForm.value === "correct" &&
-          FbAdj.value === "correct" &&
-          ineq.value === "correct";
-
-        if (allCorrect) {
-          state.conceptual.moment = true;
-          showFeedback(
-            "moment-feedback",
-            "Nice work. Your moment, section modulus, bending stress expression, adjustment factors, and inequality all line up.",
-            true
-          );
-          document.getElementById("btn-to-shear").style.display = "inline-block";
-          document.querySelector('.step-chip[data-step="1"]').classList.add("completed");
+        if (choice.id === "momentCorrect") {
+          momentOk = true;
+          showStatus("Nice – using M_w(z) = w·z² / 2 keeps the origin at the start of the load.", "success");
         } else {
-          state.conceptual.moment = false;
-          showFeedback(
-            "moment-feedback",
-            "The number I’d get for bending doesn’t match your chain of equations. Check the moment formula, section modulus, stress definition, and inequality, then try again.",
-            false
-          );
+          momentOk = false;
+          showStatus("That one treats the load like it always starts at x = 0. The beam is quietly judging you. Try again.", "error");
         }
-      });
+      }
 
-      document.getElementById("btn-to-shear").addEventListener("click", () => {
-        selectStep(2);
-      });
-
-      // Shear check
-      document.getElementById("btn-check-shear").addEventListener("click", () => {
-        const VForm = document.querySelector('input[name="VFormula"]:checked');
-        const fvForm = document.querySelector('input[name="fvFormula"]:checked');
-        const FvAdj = document.querySelector('input[name="FvAdjFormula"]:checked');
-        const ineqS = document.querySelector('input[name="ineqShear"]:checked');
-
-        if (!VForm || !fvForm || !FvAdj || !ineqS) {
-          showFeedback("shear-feedback", "Answer all four parts before checking.", false);
+      function handleCheckShear() {
+        var choice = document.querySelector('input[name=\"shearEq\"]:checked');
+        if (!choice) {
+          showStatus("Pick one of the shear options – no partial credit for vibes.", "error");
           return;
         }
 
-        const allCorrect =
-          VForm.value === "correct" &&
-          fvForm.value === "correct" &&
-          FvAdj.value === "correct" &&
-          ineqS.value === "correct";
-
-        if (allCorrect) {
-          state.conceptual.shear = true;
-          showFeedback(
-            "shear-feedback",
-            "Shear chain looks good. Your \(V_{\max}\), shear stress expression, factors, and inequality match the usual wood design logic.",
-            true
-          );
-          document.getElementById("btn-to-deflection").style.display = "inline-block";
-          document.querySelector('.step-chip[data-step="2"]').classList.add("completed");
+        if (choice.id === "shearCorrect") {
+          shearOk = true;
+          showStatus("Correct – V_w(z) = w·z grows linearly from the start of the loaded segment.", "success");
         } else {
-          state.conceptual.shear = false;
-          showFeedback(
-            "shear-feedback",
-            "The number I’d expect for shear doesn’t line up with those equations. The problem child is probably the \(V_{\max}\) formula or the 3/2 factor.",
-            false
-          );
+          shearOk = false;
+          showStatus("That shear equation thinks the load begins at the left support. The load strongly disagrees. Try again.", "error");
         }
-      });
+      }
 
-      document.getElementById("btn-to-deflection").addEventListener("click", () => {
-        selectStep(3);
-      });
-
-      // Deflection check
-      document.getElementById("btn-check-deflection").addEventListener("click", () => {
-        const DForm = document.querySelector('input[name="DeltaFormula"]:checked');
-        const DLim = document.querySelector('input[name="DeflLimitFormula"]:checked');
-        const DIneq = document.querySelector('input[name="DeflIneq"]:checked');
-
-        if (!DForm || !DLim || !DIneq) {
-          showFeedback("deflection-feedback", "Answer all three parts before checking.", false);
+      function computeAndDisplay() {
+        if (!momentOk || !shearOk) {
+          showStatus("My ethics subroutine refuses to compute design forces until you pick the right moment AND shear equations.", "error");
           return;
         }
 
-        const allCorrect =
-          DForm.value === "correct" &&
-          DLim.value === "correct" &&
-          DIneq.value === "correct";
+        var L = num("L");
+        var w = num("wUniform") || 0;
+        var a = num("wStart") || 0;
+        var b = num("wEnd") || 0;
+        var P = num("Ppoint") || 0;
+        var xP = num("Px");
 
-        if (allCorrect) {
-          state.conceptual.deflection = true;
-          showFeedback(
-            "deflection-feedback",
-            "Deflection formulas and inequality look good. You’ve got the 5/384 coefficient, the \(L/360\) limit, and the comparison in the right direction.",
-            true
-          );
-          document.getElementById("btn-to-report").style.display = "inline-block";
-          document.querySelector('.step-chip[data-step="3"]').classList.add("completed");
-        } else {
-          state.conceptual.deflection = false;
-          showFeedback(
-            "deflection-feedback",
-            "The deflection I’d compute either explodes or is way too forgiving. Check the 5/384 coefficient, the power on L, and which side of the inequality is larger.",
-            false
-          );
+        var designMethod = str("designMethod") || "ASD";
+        var species = str("species");
+
+        if (L === null || L <= 0) {
+          showStatus("Span length L needs to be a positive number. Right now it’s not.", "error");
+          return;
         }
-      });
 
-      document.getElementById("btn-to-report").addEventListener("click", () => {
-        fillReport();
-        document.querySelector('.step-chip[data-step="4"]').classList.add("completed");
-        selectStep(4);
-      });
-    });
+        if (b < a) {
+          showStatus("For the uniform load, end b must be ≥ start a. Unless you’ve invented negative length, flip those.", "error");
+          return;
+        }
+
+        if ((P !== 0) && (xP === null || xP < 0 || xP > L)) {
+          showStatus("Point load location x_P must be between 0 and L when P ≠ 0.", "error");
+          return;
+        }
+
+        var result = computeBeam(L, w, a, b, P, xP);
+
+        var lines = [];
+        lines.push("WOOD BEAM SUMMARY – SIMPLE SPAN");
+        lines.push("--------------------------------");
+        lines.push("Design method: " + designMethod);
+        if (species) lines.push("Species / grade: " + species);
+        lines.push("");
+        lines.push("Span length: L = " + fmt(result.L, 3));
+        lines.push("");
+
+        if (result.hasUniform) {
+          lines.push("Uniform load segment:");
+          lines.push("  w = " + fmt(result.w, 3) + " (force / length units)");
+          lines.push("  start a = " + fmt(result.a, 3));
+          lines.push("  end   b = " + fmt(result.b, 3));
+          lines.push("  loaded length L_u = b − a = " + fmt(result.Lload, 3));
+          lines.push("  resultant W = w · L_u = " + fmt(result.W, 3));
+          lines.push("  resultant acts at x_c = (a + b) / 2 = " + fmt(result.xc, 3));
+          lines.push("");
+        } else {
+          lines.push("Uniform load: none (w = 0 or b ≤ a).");
+          lines.push("");
+        }
+
+        if (result.hasPoint) {
+          lines.push("Point load:");
+          lines.push("  P = " + fmt(result.P, 3));
+          lines.push("  x_P = " + fmt(result.xP, 3));
+          lines.push("");
+        } else {
+          lines.push("Point load: none (P = 0).");
+          lines.push("");
+        }
+
+        lines.push("Reactions (upward positive):");
+        lines.push("  R_A = " + fmt(result.RA, 3));
+        lines.push("  R_B = " + fmt(result.RB, 3));
+        lines.push("");
+
+        lines.push("Shear envelope (upward positive):");
+        lines.push("  V_max (most positive) = " + fmt(result.Vmax, 3) +
+          " at x ≈ " + fmt(result.xVmax, 3));
+        lines.push("  V_min (most negative) = " + fmt(result.Vmin, 3) +
+          " at x ≈ " + fmt(result.xVmin, 3));
+        lines.push("");
+
+        lines.push("Moment envelope (sagging positive by sign convention):");
+        lines.push("  M_max (most positive) = " + fmt(result.Mmax, 3) +
+          " at x ≈ " + fmt(result.xMmax, 3));
+        lines.push("  M_min (most negative) = " + fmt(result.Mmin, 3) +
+          " at x ≈ " + fmt(result.xMmin, 3));
+        lines.push("");
+        lines.push("Remember to convert these to the appropriate design values for " + designMethod + ".");
+        lines.push("");
+
+        document.getElementById("resultsOutput").textContent = lines.join("\n");
+
+        // Formulas used – symbolic, showing the load locations
+        var f = [];
+        f.push("ASSUMPTIONS");
+        f.push("-----------");
+        f.push("Simple span beam with supports at x = 0 and x = L.");
+        f.push("Uniform load w on segment [a, b] (downward).");
+        f.push("Point load P at x = x_P (downward).");
+        f.push("");
+        f.push("RESULTANT OF UNIFORM LOAD");
+        f.push("  L_u = b − a");
+        f.push("  W   = w · L_u");
+        f.push("  x_c = (a + b) / 2   (centroid of uniform segment)");
+        f.push("");
+        f.push("REACTIONS (from ΣM_A = 0 and ΣV = 0):");
+        f.push("  R_B = ( W · x_c + P · x_P ) / L");
+        f.push("  R_A = W + P − R_B");
+        f.push("");
+        f.push("SHEAR (upward positive):");
+        f.push("  Let L_u(x) = max(0, min(x, b) − a) be the length of loaded segment to the left of x.");
+        f.push("  Let H(x − x_P) be the Heaviside step function (0 for x < x_P, 1 for x ≥ x_P).");
+        f.push("");
+        f.push("  V(x) = R_A − w · L_u(x) − P · H(x − x_P)");
+        f.push("");
+        f.push("MOMENT (sagging positive):");
+        f.push("  Contribution from R_A:       M_RA(x) = R_A · x");
+        f.push("  Contribution from uniform w: M_w(x)  ≈ W_x · (x − x_c(x)), where");
+        f.push("    W_x   = w · L_u(x)");
+        f.push("    x_c(x) =");
+        f.push("      (a + x)/2   for a < x < b  (centroid of the partial segment [a, x])");
+        f.push("      (a + b)/2   for x ≥ b      (full segment [a, b])");
+        f.push("");
+        f.push("  Contribution from point P:   M_P(x) = P · max(0, x − x_P)");
+        f.push("");
+        f.push("  Total moment:");
+        f.push("    M(x) = M_RA(x) − M_w(x) − M_P(x)");
+        f.push("");
+        f.push("LOCAL COORDINATE INSIDE THE UNIFORM LOAD (USED IN THE QUIZ):");
+        f.push("  Let z = x − a,  0 ≤ z ≤ L_u.");
+        f.push("  Then the contribution of the uniform load alone can be written as:");
+        f.push("    V_w(z) = w · z");
+        f.push("    M_w(z) = w · z² / 2");
+        f.push("  which is why the beam got so offended when you tried to use x instead of z.");
+
+        document.getElementById("formulaOutput").textContent = f.join("\n");
+
+        showStatus("Math accepted. Results and formulas updated below.", "success");
+      }
+
+      document.getElementById("btnCheckMoment").addEventListener("click", handleCheckMoment);
+      document.getElementById("btnCheckShear").addEventListener("click", handleCheckShear);
+      document.getElementById("btnCompute").addEventListener("click", computeAndDisplay);
+    })();
   </script>
 </body>
-</html> 
+</html>
